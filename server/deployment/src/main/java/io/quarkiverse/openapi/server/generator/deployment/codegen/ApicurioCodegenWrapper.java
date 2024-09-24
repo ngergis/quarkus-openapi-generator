@@ -1,6 +1,7 @@
 package io.quarkiverse.openapi.server.generator.deployment.codegen;
 
 import static io.quarkiverse.openapi.server.generator.deployment.CodegenConfig.getBasePackagePropertyName;
+import static io.quarkiverse.openapi.server.generator.deployment.CodegenConfig.getBeanInclusionLevel;
 import static io.quarkiverse.openapi.server.generator.deployment.CodegenConfig.getCodegenReactive;
 
 import java.io.File;
@@ -16,6 +17,7 @@ import java.util.zip.ZipFile;
 
 import org.apache.commons.io.IOUtils;
 import org.eclipse.microprofile.config.Config;
+import org.jsonschema2pojo.InclusionLevel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +42,7 @@ public class ApicurioCodegenWrapper {
         this.projectSettings = projectSettings;
         this.projectSettings.setJavaPackage(getBasePackage(config));
         this.projectSettings.setReactive(getReactiveValue(config));
+        this.projectSettings.setInclusionLevel(getInclusionLevel(config));
     }
 
     public void generate(Path openApiResource) throws CodeGenException {
@@ -116,6 +119,13 @@ public class ApicurioCodegenWrapper {
         return config
                 .getOptionalValue(getCodegenReactive(), Boolean.class)
                 .orElse(Boolean.FALSE);
+    }
+
+    private InclusionLevel getInclusionLevel(Config config) {
+        return InclusionLevel.valueOf(
+                config.getOptionalValue(getBeanInclusionLevel(), String.class)
+                        .orElse("non_null")
+                        .toUpperCase());
     }
 
     private static JaxRsProjectSettings defaultProjectSettings() {

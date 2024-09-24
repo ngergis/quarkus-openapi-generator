@@ -11,6 +11,7 @@ public class CodegenConfig {
     private static final String CODEGEN_SPEC = CODEGEN_TIME_CONFIG_PREFIX + ".spec";
     private static final String INPUT_BASE_DIR = CODEGEN_TIME_CONFIG_PREFIX + ".input-base-dir";
     private static final String CODEGEN_REACTIVE = CODEGEN_TIME_CONFIG_PREFIX + ".reactive";
+    private static final String BEAN_INCLUSION_LEVEL = CODEGEN_TIME_CONFIG_PREFIX + ".bean-inclusion-level";
 
     public static String getBasePackagePropertyName() {
         return CODEGEN_BASE_PACKAGE;
@@ -26,5 +27,9 @@ public class CodegenConfig {
 
     public static String getCodegenReactive() {
         return CODEGEN_REACTIVE;
+    }
+
+    public static String getBeanInclusionLevel() {
+        return BEAN_INCLUSION_LEVEL;
     }
 }
